@@ -22,6 +22,7 @@ class _SignupPageState extends State<SignupPage> {
   final nationalityController = TextEditingController(text: "Pakistani");
   final lastnameController = TextEditingController();
   final firstnameController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   // List<String> cniccheck = [
   //   "12345",
@@ -53,251 +54,103 @@ class _SignupPageState extends State<SignupPage> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(top: 0),
-                width: 250,
-                height: 150,
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage("assets/log1.png"),
-                        fit: BoxFit.cover)),
-              ),
-              Column(
-                //crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "Register your account",
-                    style: TextStyle(
-                      fontSize: 22,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(
-                    height: h * 0.02,
-                  ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: ElevatedButton(
-                        onPressed: () async {
-                          // CnicModel _cnicModel = CnicModel();
-
-                          // final result = await CnicScanner()
-                          //     .scanImage(imageSource: ImageSource.gallery);
-
-                          // firstnameController.text =
-                          //     result.cnicHolderName.split(" ")[0];
-                          // lastnameController.text =
-                          //     result.cnicHolderName.split(" ")[1];
-                          // cnicController.text = result.cnicNumber;
-
-                          //show dialog to select image from gallery or camera
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text("Select Image"),
-                                content: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    ListTile(
-                                      title: const Text("Camera"),
-                                      onTap: () async {
-                                        final result = await CnicScanner()
-                                            .scanImage(
-                                                imageSource:
-                                                    ImageSource.camera);
-
-                                        firstnameController.text =
-                                            result.cnicHolderName.split(" ")[0];
-                                        lastnameController.text =
-                                            result.cnicHolderName.split(" ")[1];
-                                        cnicController.text = result.cnicNumber;
-
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                    ListTile(
-                                      title: const Text("Gallery"),
-                                      onTap: () async {
-                                        final result = await CnicScanner()
-                                            .scanImage(
-                                                imageSource:
-                                                    ImageSource.gallery);
-
-                                        firstnameController.text =
-                                            result.cnicHolderName.split(" ")[0];
-                                        lastnameController.text =
-                                            result.cnicHolderName.split(" ")[1];
-                                        cnicController.text = result.cnicNumber;
-
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          );
-                        },
-                        child: const Text("Scan CNIC")),
-                  ),
-                  SizedBox(
-                    height: h * 0.02,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30),
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 10,
-                            spreadRadius: 7,
-                            offset: const Offset(1, 1),
-                            color: Colors.grey.withOpacity(0.4),
-                          )
-                        ]),
-                    child: TextField(
-                      controller: firstnameController,
-                      decoration: InputDecoration(
-                        hintText: "First Name ",
-                        prefixIcon:
-                            Icon(Icons.person, color: Colors.green[600]),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            borderSide: const BorderSide(
-                              color: Colors.white,
-                              width: 1.0,
-                            )),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            borderSide: const BorderSide(
-                                color: Colors.white, width: 1.0)),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 0),
+                  width: 250,
+                  height: 150,
+                  decoration: const BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage("assets/log1.png"),
+                          fit: BoxFit.cover)),
+                ),
+                Column(
+                  //crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Register your account",
+                      style: TextStyle(
+                        fontSize: 22,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: h * 0.02,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30),
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 10,
-                            spreadRadius: 7,
-                            offset: const Offset(1, 1),
-                            color: Colors.grey.withOpacity(0.4),
-                          )
-                        ]),
-                    child: TextField(
-                      controller: lastnameController,
-                      decoration: InputDecoration(
-                        hintText: "Last Name",
-                        prefixIcon:
-                            Icon(Icons.person, color: Colors.green[600]),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            borderSide: const BorderSide(
-                              color: Colors.white,
-                              width: 1.0,
-                            )),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            borderSide: const BorderSide(
-                                color: Colors.white, width: 1.0)),
-                      ),
+                    SizedBox(
+                      height: h * 0.02,
                     ),
-                  ),
-                  SizedBox(
-                    height: h * 0.02,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30),
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 10,
-                            spreadRadius: 7,
-                            offset: const Offset(1, 1),
-                            color: Colors.grey.withOpacity(0.4),
-                          )
-                        ]),
-                    child: TextField(
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: ElevatedButton(
+                          onPressed: () async {
+                            // CnicModel _cnicModel = CnicModel();
 
-                      controller: nationalityController,
-                      enabled: false,
-                      decoration: InputDecoration(
-                        hintText: "Nationality",
-                        prefixIcon:
-                            Icon(Icons.add_home, color: Colors.green[600]),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            borderSide: const BorderSide(
-                              color: Colors.white,
-                              width: 1.0,
-                            )),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            borderSide: const BorderSide(
-                                color: Colors.white, width: 1.0)),
-                      ),
-                    ),
-                  ),
+                            // final result = await CnicScanner()
+                            //     .scanImage(imageSource: ImageSource.gallery);
 
-                  SizedBox(
-                    height: h * 0.02,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30),
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 10,
-                            spreadRadius: 7,
-                            offset: const Offset(1, 1),
-                            color: Colors.grey.withOpacity(0.4),
-                          )
-                        ]),
-                    child: TextField(
-                      controller: cnicController,
-                      decoration: InputDecoration(
-                        hintText: "CNIC",
-                        prefixIcon:
-                            Icon(Icons.numbers_sharp, color: Colors.green[600]),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            borderSide: const BorderSide(
-                              color: Colors.white,
-                              width: 1.0,
-                            )),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            borderSide: const BorderSide(
-                                color: Colors.white, width: 1.0)),
-                      ),
-                      // validator: (value){
-                      //   if(value!.isEmpty){
-                      //     return "Empty Field!";
-                      //   }
-                      //   if(!RegExp(r'^([0-9]{5})([0-9]{7})([0-9]{1})$').hasMatch(value!)){
-                      //     return "Invalid CNIC";
-                      //   }
-                      //   else{
-                      //     return null;
-                      //   }
-                      // },
+                            // firstnameController.text =
+                            //     result.cnicHolderName.split(" ")[0];
+                            // lastnameController.text =
+                            //     result.cnicHolderName.split(" ")[1];
+                            // cnicController.text = result.cnicNumber;
+
+                            //show dialog to select image from gallery or camera
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text("Select Image"),
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      ListTile(
+                                        title: const Text("Camera"),
+                                        onTap: () async {
+                                          final result = await CnicScanner()
+                                              .scanImage(
+                                                  imageSource:
+                                                      ImageSource.camera);
+
+                                          firstnameController.text =
+                                              result.cnicHolderName.split(" ")[0];
+                                          lastnameController.text =
+                                              result.cnicHolderName.split(" ")[1];
+                                          cnicController.text = result.cnicNumber;
+
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                      ListTile(
+                                        title: const Text("Gallery"),
+                                        onTap: () async {
+                                          final result = await CnicScanner()
+                                              .scanImage(
+                                                  imageSource:
+                                                      ImageSource.gallery);
+
+                                          firstnameController.text =
+                                              result.cnicHolderName.split(" ")[0];
+                                          lastnameController.text =
+                                              result.cnicHolderName.split(" ")[1];
+                                          cnicController.text = result.cnicNumber;
+
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          child: const Text("Scan CNIC")),
                     ),
-                  ),
-                  SizedBox(
-                    height: h * 0.02,
-                  ),
-                  Container(
+                    SizedBox(
+                      height: h * 0.02,
+                    ),
+                    Container(
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(30),
@@ -310,11 +163,11 @@ class _SignupPageState extends State<SignupPage> {
                             )
                           ]),
                       child: TextField(
-                        controller: emailController,
+                        controller: firstnameController,
                         decoration: InputDecoration(
-                          hintText: "Your Email",
-                          prefixIcon: Icon(Icons.email_outlined,
-                              color: Colors.green[600]),
+                          hintText: "First Name ",
+                          prefixIcon:
+                              Icon(Icons.person, color: Colors.green[600]),
                           focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(30),
                               borderSide: const BorderSide(
@@ -326,11 +179,83 @@ class _SignupPageState extends State<SignupPage> {
                               borderSide: const BorderSide(
                                   color: Colors.white, width: 1.0)),
                         ),
-                      )),
-                  SizedBox(
-                    height: h * 0.02,
-                  ),
-                  Container(
+                      ),
+                    ),
+                    SizedBox(
+                      height: h * 0.02,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 10,
+                              spreadRadius: 7,
+                              offset: const Offset(1, 1),
+                              color: Colors.grey.withOpacity(0.4),
+                            )
+                          ]),
+                      child: TextField(
+                        controller: lastnameController,
+                        decoration: InputDecoration(
+                          hintText: "Last Name",
+                          prefixIcon:
+                              Icon(Icons.person, color: Colors.green[600]),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              borderSide: const BorderSide(
+                                color: Colors.white,
+                                width: 1.0,
+                              )),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              borderSide: const BorderSide(
+                                  color: Colors.white, width: 1.0)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: h * 0.02,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 10,
+                              spreadRadius: 7,
+                              offset: const Offset(1, 1),
+                              color: Colors.grey.withOpacity(0.4),
+                            )
+                          ]),
+                      child: TextField(
+
+                        controller: nationalityController,
+                        enabled: false,
+                        decoration: InputDecoration(
+                          hintText: "Nationality",
+                          prefixIcon:
+                              Icon(Icons.add_home, color: Colors.green[600]),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              borderSide: const BorderSide(
+                                color: Colors.white,
+                                width: 1.0,
+                              )),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              borderSide: const BorderSide(
+                                  color: Colors.white, width: 1.0)),
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(
+                      height: h * 0.02,
+                    ),
+                    Container(
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(30),
@@ -343,198 +268,290 @@ class _SignupPageState extends State<SignupPage> {
                             )
                           ]),
                       child: TextFormField(
-                        controller: numberController,
+                        controller: cnicController,
                         decoration: InputDecoration(
-                          hintText: "Phone Number",
-                          prefixIcon: const Icon(Icons.phone, color: Colors.teal),
+                          hintText: "CNIC",
+                          prefixIcon:
+                              Icon(Icons.numbers_sharp, color: Colors.green[600]),
                           focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(18),
+                              borderRadius: BorderRadius.circular(30),
                               borderSide: const BorderSide(
-                                color: Colors.tealAccent,
+                                color: Colors.white,
                                 width: 1.0,
-                              )
-                          ),
+                              )),
                           enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(18),
+                              borderRadius: BorderRadius.circular(30),
                               borderSide: const BorderSide(
-                                  color: Colors.grey,
-                                  width: 1.0
-                              )
-                          ),
+                                  color: Colors.white, width: 1.0)),
                         ),
                         validator: (value){
-                          if(value!.isEmpty ){
-                            return "Empty Field";
+                          if(value!.isEmpty){
+                            return "Empty Field!";
                           }
-                          if(!RegExp(r'^((\+92)?(0092)?(92)?(0)?)(3)([0-9]{9})$').hasMatch(value!)){
-                            return "Enter correct phone number!";
-                          }else{
+                          if(!RegExp(r'^([0-9]{5})[\-]([0-9]{7})[\-]([0-9]{1})$').hasMatch(value!)){
+                            return "Invalid CNIC";
+                          }
+                          else{
                             return null;
                           }
                         },
+                        // validator: (value){
+                        //   if(value!.isEmpty){
+                        //     return "Empty Field!";
+                        //   }
+                        //   if(!RegExp(r'^([0-9]{5})([0-9]{7})([0-9]{1})$').hasMatch(value!)){
+                        //     return "Invalid CNIC";
+                        //   }
+                        //   else{
+                        //     return null;
+                        //   }
+                        // },
                       ),
-                  ),
-                  SizedBox(
-                    height: h * 0.02,
-                  ),
-                  Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(30),
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 10,
-                              spreadRadius: 7,
-                              offset: const Offset(1, 1),
-                              color: Colors.grey.withOpacity(0.4),
-                            )
-                          ]),
-                    child: TextField(
-                      controller: passwordController,
-                      obscureText: _obscureText,
-                      decoration: InputDecoration(
-                        hintText: "Password",
-                        prefixIcon: Icon(Icons.password, color: Colors.green[600]),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            _obscureText ? Icons.visibility : Icons.visibility_off,
-                            color: Colors.grey,
+                    ),
+                    SizedBox(
+                      height: h * 0.02,
+                    ),
+                    Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 10,
+                                spreadRadius: 7,
+                                offset: const Offset(1, 1),
+                                color: Colors.grey.withOpacity(0.4),
+                              )
+                            ]),
+                        child: TextField(
+                          controller: emailController,
+                          decoration: InputDecoration(
+                            hintText: "Your Email",
+                            prefixIcon: Icon(Icons.email_outlined,
+                                color: Colors.green[600]),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide: const BorderSide(
+                                  color: Colors.white,
+                                  width: 1.0,
+                                )),
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide: const BorderSide(
+                                    color: Colors.white, width: 1.0)),
                           ),
-                          onPressed: () {
-                            setState(() {
-                              _obscureText = !_obscureText;
-                            });
+                        )),
+                    SizedBox(
+                      height: h * 0.02,
+                    ),
+                    Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 10,
+                                spreadRadius: 7,
+                                offset: const Offset(1, 1),
+                                color: Colors.grey.withOpacity(0.4),
+                              )
+                            ]),
+                        child: TextFormField(
+                          controller: numberController,
+                          decoration: InputDecoration(
+                            hintText: "Phone Number",
+                            prefixIcon: const Icon(Icons.phone, color: Colors.teal),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: const BorderSide(
+                                  color: Colors.tealAccent,
+                                  width: 1.0,
+                                )
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                borderSide: const BorderSide(
+                                    color: Colors.grey,
+                                    width: 1.0
+                                )
+                            ),
+                          ),
+                          validator: (value){
+                            if(value!.isEmpty ){
+                              return "Empty Field";
+                            }
+                            if(!RegExp(r'^((\+92)?(0092)?(92)?(0)?)(3)([0-9]{9})$').hasMatch(value!)){
+                              return "Enter correct phone number!";
+                            }else{
+                              return null;
+                            }
                           },
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30),
-                          borderSide: const BorderSide(
-                            color: Colors.white,
-                            width: 1.0,
-                          ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30),
-                          borderSide: const BorderSide(
-                            color: Colors.white,
-                            width: 1.0,
-                          ),
-                        ),
-                      ),
-                    ),),
-                  SizedBox(
-                    height: h * 0.02,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: h * 0.03,
-              ),
-              GestureDetector(
-                onTap: () {
-                  if (false) {
-                    print("CNIC not Found");
-                    // Display a Snackbar with an error message
-                    Get.snackbar(
-                      "About User",
-                      "Invalid CNIC",
-                      backgroundColor: Colors.redAccent,
-                      snackPosition: SnackPosition.BOTTOM,
-                      titleText: const Text(
-                        "Account creation failed",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      messageText: const Text(
-                        "Invalid CNIC!",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    );
-                  } else {
-                    // CNIC matches, proceed with registration
-                    AuthController.instance.register(
-                      emailController.text.trim(),
-                      passwordController.text.trim(),
-                      firstnameController.text.trim(),
-                      lastnameController.text.trim(),
-                      nationalityController.text.trim(),
-                      numberController.text.trim(),
-                      cnicController.text.trim(),
-                    );
-                  }
-                },
-                child: Container(
-                    margin: const EdgeInsets.only(left: 20, right: 20),
-                    // width: w * 0.1,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: Colors.green[600],
-                      borderRadius: BorderRadius.circular(30),
                     ),
-                    child: const Center(
-                      child: Text(
-                        "Sign up",
-                        style: TextStyle(
-                          fontSize: 30,
-                          color: Colors.white,
+                    SizedBox(
+                      height: h * 0.02,
+                    ),
+                    Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 10,
+                                spreadRadius: 7,
+                                offset: const Offset(1, 1),
+                                color: Colors.grey.withOpacity(0.4),
+                              )
+                            ]),
+                      child: TextField(
+                        controller: passwordController,
+                        obscureText: _obscureText,
+                        decoration: InputDecoration(
+                          hintText: "Password",
+                          prefixIcon: Icon(Icons.password, color: Colors.green[600]),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _obscureText ? Icons.visibility : Icons.visibility_off,
+                              color: Colors.grey,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _obscureText = !_obscureText;
+                              });
+                            },
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: const BorderSide(
+                              color: Colors.white,
+                              width: 1.0,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: const BorderSide(
+                              color: Colors.white,
+                              width: 1.0,
+                            ),
+                          ),
                         ),
-                      ),
-                    )),
-              ),
-              SizedBox(
-                height: w * 0.04,
-              ),
-              Center(
-                child: RichText(
-                  text: TextSpan(
-                    text: "Already have an account?",
-                    style: TextStyle(color: Colors.grey[500], fontSize: 16),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: ' Login',
-                        style: const TextStyle(
-                          color: Colors.green,
-                          fontWeight: FontWeight.bold,
+                      ),),
+                    SizedBox(
+                      height: h * 0.02,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: h * 0.03,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    if (false) {
+                      print("CNIC not Found");
+                      // Display a Snackbar with an error message
+                      Get.snackbar(
+                        "About User",
+                        "Invalid CNIC",
+                        backgroundColor: Colors.redAccent,
+                        snackPosition: SnackPosition.BOTTOM,
+                        titleText: const Text(
+                          "Account creation failed",
+                          style: TextStyle(color: Colors.white),
                         ),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () => Get.to(
-                                () => const LoginPage(),
-                              ),
+                        messageText: const Text(
+                          "Invalid CNIC!",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      );
+                    } else {
+                      // CNIC matches, proceed with registration
+                      if(_formKey.currentState!.validate()) {
+                        AuthController.instance.register(
+                          emailController.text.trim(),
+                          passwordController.text.trim(),
+                          firstnameController.text.trim(),
+                          lastnameController.text.trim(),
+                          nationalityController.text.trim(),
+                          numberController.text.trim(),
+                          cnicController.text.trim(),
+                        );
+                      }
+                    }
+                  },
+                  child: Container(
+                      margin: const EdgeInsets.only(left: 20, right: 20),
+                      // width: w * 0.1,
+                      height: 60,
+                      decoration: BoxDecoration(
+                        color: Colors.green[600],
+                        borderRadius: BorderRadius.circular(30),
                       ),
-                    ],
+                      child: const Center(
+                        child: Text(
+                          "Sign up",
+                          style: TextStyle(
+                            fontSize: 30,
+                            color: Colors.white,
+                          ),
+                        ),
+                      )),
+                ),
+                SizedBox(
+                  height: w * 0.04,
+                ),
+                Center(
+                  child: RichText(
+                    text: TextSpan(
+                      text: "Already have an account?",
+                      style: TextStyle(color: Colors.grey[500], fontSize: 16),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: ' Login',
+                          style: const TextStyle(
+                            color: Colors.green,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () => Get.to(
+                                  () => const LoginPage(),
+                                ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              // Center(
-              //   child: RichText(
-              //       text: TextSpan(
-              //     text: "Sign up using the following method",
-              //     style: TextStyle(color: Colors.grey[500], fontSize: 16),
-              //   )),
-              // ),
-              // // SizedBox(height: w*0.01,),
-              // Center(
-              //   child: Wrap(
-              //     children: List<Widget>.generate(2, (index) {
-              //       return Padding(
-              //         padding: const EdgeInsets.all(5.0),
-              //         child: CircleAvatar(
-              //           backgroundColor: Colors.white,
-              //           radius: 30,
-              //           child: CircleAvatar(
-              //             backgroundColor: Colors.white,
-              //             radius: 25,
-              //             backgroundImage:
-              //                 AssetImage("assets/" + images[index]),
-              //           ),
-              //         ),
-              //       );
-              //     }),
-              //   ),
-              // )
-            ],
+                const SizedBox(
+                  height: 20,
+                ),
+                // Center(
+                //   child: RichText(
+                //       text: TextSpan(
+                //     text: "Sign up using the following method",
+                //     style: TextStyle(color: Colors.grey[500], fontSize: 16),
+                //   )),
+                // ),
+                // // SizedBox(height: w*0.01,),
+                // Center(
+                //   child: Wrap(
+                //     children: List<Widget>.generate(2, (index) {
+                //       return Padding(
+                //         padding: const EdgeInsets.all(5.0),
+                //         child: CircleAvatar(
+                //           backgroundColor: Colors.white,
+                //           radius: 30,
+                //           child: CircleAvatar(
+                //             backgroundColor: Colors.white,
+                //             radius: 25,
+                //             backgroundImage:
+                //                 AssetImage("assets/" + images[index]),
+                //           ),
+                //         ),
+                //       );
+                //     }),
+                //   ),
+                // )
+              ],
+            ),
           ),
         ),
       ),
